@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="/CSS/bootstrap.min.css" />
+    <script src="/JS/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/JS/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/JS/angular.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/JS/gq.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body ng-app="app" ng-controller="cro" background="/images/2015032715463873.jpg" >
+<div class="container">
+    <!--text-info 改变颜色 text-center 居中 -->
+    <caption ><strong><h1  class="text-info text-center">用户添加</h1></strong></caption>
+    <form role="form"  method="post" style="margin-top:50px;" class="form form-horizontal" name="zhuceForm"  enctype="multipart/form-data" action="/userAction/insertUser" ng-init="userName='gq';password='123456';userAge=81;userEmail='123@qq.com';userPhone=15934067293;userId=140522199601180068">
+
+        <div class="form-group">
+            <label class="col-sm-3  text-right" for="userName" >姓名:</label>
+            <div class="col-sm-6">
+                <input class="form-control" name="userName" id="userName" ng-model="userName" ng-minlength="2" ng-maxlength="5" required="" ng-blur="yanZheng()"/>
+                <div ng-show="zhuceForm.userName.$dirty && zhuceForm.userName.$invalid" class="alert alert-danger">请输入正确的姓名</div>
+                <div ng-show="chongfu"  class="alert alert-danger">用户名已存在</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 text-right" for="password">密码:</label>
+            <div class="col-sm-6">
+                <input class="form-control " name="password" id="password" ng-model="password" ng-minlength="5"  required=""/>
+                <div ng-show="zhuceForm.password.$dirty && zhuceForm.password.$invalid" class="alert alert-danger">请输入正确的密码</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 text-right" >性别:</label>
+            <div class="col-sm-6">
+                <input type="radio" class="radio radio-inline" name="userSex"  value="0" checked /><label>男</label>
+                <input type="radio" class="radio radio-inline" name="userSex"  value="1" /><label>女</label>
+                <div class="alert alert-danger"  ng-show="zhuceForm.userSex.$error">必须选择一个性别</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 text-right" for="userAge">年龄:</label>
+            <div class="col-sm-6">
+                <input type="number" class="form-control" name="userAge" id="userAge" ng-model="userAge" required="" />
+                <div class="alert alert-danger"  ng-show="zhuceForm.userAge.$invalid && zhuceForm.userAge.$dirty">必须输入年龄</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 text-right" for="userEmail">Email:</label>
+            <div class="col-sm-6">
+                <input class="form-control " type="email" name="userEmail" id="userEmail" ng-model="userEmail"   required=""/>
+                <div ng-show="zhuceForm.userEmail.$dirty && zhuceForm.userEmail.$invalid" class="alert alert-danger">请输入正确的Email</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 text-right" for="userPhone">手机号:</label>
+            <div class="col-sm-6">
+                <input class="form-control " ng-pattern=" /(^13\d{9}$)|(^14)[5,7]\d{8}$|(^15[0,1,2,3,5,6,7,8,9]\d{8}$)|(^17)[6,7,8]\d{8}$|(^18\d{9}$)/g" type="number" name="userPhone" id="userPhone" ng-model="userPhone"   required=""/>
+                <div ng-show="zhuceForm.userPhone.$dirty && zhuceForm.userPhone.$invalid" class="alert alert-danger">请输入正确的手机号码</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 text-right" for="userId">身份证号:</label>
+            <div class="col-sm-6">
+                <input class="form-control " ng-pattern="/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" type="number" name="userId" id="userId" ng-model="userId"   required=""/>
+                <div ng-show="zhuceForm.userId.$dirty && zhuceForm.userId.$invalid" class="alert alert-danger">请输入正确的身份证号码</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 text-right">照片:</label>
+            <div class="col-sm-6">
+                <input type="file" name="photo"  multiple onchange="change()" id="files">
+                <img src="" alt="" name="preview"  id="preview">
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" ng-disabled="zhuceForm.$invalid" class="btn btn-warning">提交</button>
+            <button type="reset" class="btn btn-danger">清空</button>
+        </div>
+    </form>
+</div>
+</body>
+<script type="text/javascript">
+    var app=angular.module("app",[]);
+    app.controller("cro",["$scope","$http",function($scope,$http){
+        $scope.yanZheng=function(){
+            var userName=$scope.userName;
+            if(userName!=undefined){
+                var url="/zhuce/yanZhengUserName";
+                var data={userName:userName};
+                $http.post(url,data).then(function(result){
+                    console.info(result);
+                    var code=result.data.resultCode;
+                    if(code==1){
+                        $scope.chongfu=true;
+                    }else{
+                        $scope.chongfu=false;
+                    }
+                })
+
+            }
+        }
+    }])
+</script>
+</html>

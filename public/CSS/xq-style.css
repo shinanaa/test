@@ -1,0 +1,32 @@
+@import url(reset.css);
+/*head开始*/
+.head{width: 100%;height: 50px;background:url(../images/list/HT1.png);margin-bottom: 30px;}
+.head .head1{width: 1200px;height: 50px;margin:0 auto;background: url(../images/list/LOGOh.png) no-repeat left;}
+.head .span1{display: block;height: 20px;width: 160px;font-size: 14px;float: left;text-align: right;color: white;margin-top: 15px;}
+.head .span2{display: block;height: 20px;width: 100px;font-size: 12px;float: left;text-align: right;margin-top: 17px;}
+.head .span2 a{color: black;}
+.head .span3{display: block;height: 20px;width: 300px;font-size: 14px;float: right;text-align: right;color: white;margin-top: 15px;}
+.head .span3 a{color: white;}
+/*head结束*/
+/*ban开始*/
+.sx{width: 1200px;margin:0 auto;background:#edeff0;margin-bottom: 1px;height: 30px;margin-bottom: 10px;}
+.sx a{line-height: 30px;color: black;}
+.sx .sre{height: 30px;width: 325px;float: right;}
+.sx .sra{height: 20px;width: 270px;border: none;border-bottom: 1px black solid;margin-top: 5px;color: gray;background:#edeff0;}
+.sx .btn{height: 25px;width: 25px;background: url(../images/list/fdj1.png) no-repeat;border: none;float: right;margin-right: 5px;}
+/*ban结束*/
+/*详情开始*/
+.Mtime{ width:800px; height:610px;  overflow:hidden; position:relative; background:url("images/bg_movies.jpg") no-repeat;margin:0 auto;}
+.Mtime .tabBox{ overflow:hidden; zoom:1; }
+.Mtime .tabBox .bd{ width: 500px;  float:left; margin-right: 20px;}
+.Mtime .tabBox .bd ul{padding:0;margin:0;float: right;width: 100px;height: 500px;display: block;}
+.Mtime .tabBox .bd li{ overflow:hidden; zoom:1; width: 490px;height: 500px;}
+.Mtime .tabBox .bd .imgs{ float:left; width: 490px;height: 500px;}
+.Mtime .tabBox .bd .imgs img{height: 490px;height: 500px;}
+.Mtime .tabBox .hd{ width:370px;height: 610px; float:left;}
+.Mtime .tabBox .hd ul{padding:0;margin:0;}
+.Mtime .tabBox .hd li{ margin-bottom:30px;cursor:pointer; vertical-align:middle;  width: 90px;height: 90px;float: right;}
+.Mtime .tabBox .hd a{ display:block; height:90px; overflow:hidden;}
+.Mtime .tabBox .hd img{ width:90px; height:90px;}
+.Mtime .tabBox .hd li.on{ background:url("images/icoLeft.gif") 0 center no-repeat;}
+.Mtime .tabBox .hd li.on a{ background:#85CB35;}

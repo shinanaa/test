@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/CSS/bootstrap.min.css" />
+    <script src="/JS/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/JS/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/JS/angular.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body ng-app="app" ng-controller="cro">
+<table class="table table-responsive table-striped table-hover">
+    <tr class=" success ">
+        <th><input type="checkbox" ng-model="zhuangtai"/>全选</th>
+        <th>姓名</th>
+        <th>密码</th>
+        <th>照片</th>
+        <th>年龄</th>
+        <th>性别</th>
+        <th>邮箱</th>
+        <th>电话</th>
+        <th>身份证</th>
+        <th>操作<th>
+
+    </tr>
+    <tr ng-repeat="a in list"  id="{{a.user_id}}">
+        <td><input type="checkbox" ng-checked="zhuangtai" data-ng-click="xuanze($event,a.user_id)"/></td>
+        <td >{{a.user_name}}</td>
+        <td >{{a.user_pass}}</td>
+        <td ><img ng-src="{{a.user_photo}}" alt=""></td>
+        <td >{{a.user_age}}</td>
+        <td >{{ a.user_sex | xingBie }}</td>
+        <td >{{a.user_email}}</td>
+        <td >{{a.user_tel}}</td>
+        <td >{{a.user_card}}</td>
+        <td ><a href="/userAction/editPage?id={{a.user_id}}">修改</a> | <a href="/userAction/deleteUser?id={{a.user_id}}">删除</a></td>
+    </tr>
+    <tr>
+        <td colspan="10" >
+            <input type="button" value="添加" class="btn btn-success" data-ng-click="tianjia()">
+            <input type="button" value="全部删除" class="btn btn-danger" data-ng-click="deleteAll()">
+        </td>
+    </tr>
+</table>
+</body>
+<script type="text/javascript">
+    var app=angular.module("app",[]);
+    app.controller("cro",["$scope","$http",function($scope,$http){
+        var url="/userAction/selectUser";
+        var data={};
+        $http.post(url,data).then(function(result){
+            console.info(result.data.users);
+            $scope.list=result.data.users;
+        })
+        $scope.tianjia=function(){
+            location.href="/userAction/addUser";
+        }
+        var userIds=[];
+        $scope.xuanze=function($event,userId){
+            var check=$event.target.checked;
+            if(check==true){
+                userIds.push(userId);
+            }else{
+                var index=$.inArray(userId,userIds);
+                userIds.splice(index,1);
+            }
+//            alert(userIds);
+        }
+        $scope.deleteAll=function(){
+            if(userIds.length>0){
+                var userIdsStr=userIds.join(",");
+                $http.post("/userAction/deleteAll",{userIdsStr:userIdsStr}).then(function(result){
+                    console.info(result.data.resultCode);
+                    var code=result.data.resultCode;
+                    if(code==1){
+                        for(var i=0;i<userIds.length;i++){
+                            $("#"+userIds[i]).remove();
+                        }
+                        alert("删除成功");
+                    }else{
+                        alert("删除失败");
+                    }
+                })
+            }else{
+                alert("请选择要删除的用户");
+            }
+        }
+    }])
+    app.filter("xingBie",function(){
+        return function(lala){
+            var xb=(lala==1?'女':'男');
+            return xb;
+        }
+    })
+</script>
+
+</html>
